@@ -35,10 +35,11 @@ public class ProductService {
     }
 
     public Product updateProduct(int id, Product prod) throws ProductNotFoundException {
-        Product existingProduct = productRepo.findById(prod.getId()).orElseThrow(ProductNotFoundException::new);
-        existingProduct.setName(prod.getName());
-        existingProduct.setPrice(prod.getPrice());
-        return productRepo.save(existingProduct);
+        try{
+        return productRepo.save(prod);}
+        catch (EntityNotFoundException e){
+            throw new ProductNotFoundException();
+        }
     }
 
     public void deleteProduct(int id) throws ProductNotFoundException {
