@@ -1,38 +1,27 @@
 package com.springboottsk3.task31;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import javax.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "product")
 public class Product {
-    @Id
-    private String id;
-
-    private String name;
-    private int price;
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
-
-    public Product() {
-    }
-
-    public Product(String id,String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-
 
     public String getName() {
         return name;
@@ -50,18 +39,11 @@ public class Product {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id && price == product.price && Objects.equals(name, product.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price);
-    }
+    @Id
+    @GeneratedValue
+    private int id;
+    private String name;
+    private int price;
 
     @Override
     public String toString() {

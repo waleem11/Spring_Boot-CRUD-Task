@@ -24,25 +24,25 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> findById(@PathVariable String id) throws ProductNotFoundException{
+    public Optional<Product> findById(@PathVariable int id) throws ProductNotFoundException{
         return pService.findProduct(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void add(@RequestBody Product prod){
-        pService.AddProduct(prod);
+    public Product add(@RequestBody Product prod){
+        return pService.AddProduct(prod);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@RequestBody Product product, @PathVariable String id) throws ProductNotFoundException{
-        pService.updateProduct(id,product);
+    public Product update(@RequestBody Product product, @PathVariable int id) throws ProductNotFoundException{
+        return pService.updateProduct(id,product);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) throws ProductNotFoundException{
+    public void delete(@PathVariable int id) throws ProductNotFoundException{
         pService.deleteProduct(id);
     }
 }

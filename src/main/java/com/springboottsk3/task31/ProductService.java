@@ -22,11 +22,11 @@ public class ProductService {
           return plist;
     }
 
-    public void AddProduct(Product product){
-        productRepo.save(product);
+    public Product AddProduct(Product product){
+        return productRepo.save(product);
     }
 
-    public Optional<Product> findProduct(String id) throws ProductNotFoundException{
+    public Optional<Product> findProduct(int id) throws ProductNotFoundException{
         try{
         return productRepo.findById(id);}
         catch(EntityNotFoundException e){
@@ -34,15 +34,14 @@ public class ProductService {
         }
     }
 
-    public void updateProduct(String id, Product prod) throws ProductNotFoundException {
-        try{
-        productRepo.save(prod);}
-        catch (EntityNotFoundException e){
-            throw new ProductNotFoundException();
-        }
+    public Product updateProduct(int id, Product prod) throws ProductNotFoundException {
+        Product existingProduct = productRepo.findById(prod.getId()).orElseThrow(ProductNotFoundException::new);
+        existingProduct.setName(prod.getName());
+        existingProduct.setPrice(prod.getPrice());
+        return productRepo.save(existingProduct);
     }
 
-    public void deleteProduct(String id) throws ProductNotFoundException {
+    public void deleteProduct(int id) throws ProductNotFoundException {
         try{
         productRepo.deleteById(id);}
         catch (EntityNotFoundException e){
